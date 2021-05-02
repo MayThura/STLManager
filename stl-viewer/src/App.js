@@ -10,6 +10,8 @@ const Button = styled.button`
   margin-top: 20px;
 `;
 
+const BASE_SERVER_URL = 'http://localhost:3001';
+
 export default function App () {
   const [ selectedFile, setSelectedFile ] = useState('');
   const [ downloadingFile, setDownloadingFile ] = useState('');
@@ -27,7 +29,7 @@ export default function App () {
 
   const uploadFileChosen = (e) => {
     if (e.target.files.length > 0 ) {
-      if (e.target.files[0].name.includes('.stl')) {
+      if (e.target.files[0].name.toLowerCase().includes('.stl')) {
         const formData = new FormData();
         formData.append(
           'myFile',
@@ -37,24 +39,26 @@ export default function App () {
           'fileName',
           e.target.files[0].name
         );
-        axiosInstance.post('/upload', formData, {
+        axios({
+          url: `${BASE_SERVER_URL}/upload`,
+          method: 'POST',
+          data: formData,
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        })
-        .then((response) => {
+        }).then((response) => {
           const uploadedFilePath = response.data;
           const tmp = uploadedFilePath.split('/');
           const fileName = tmp[tmp.length - 1];
           setSelectedFile(fileName);
-        });
+        })
       }
     } 
   }
 
   const downloadFileChosen = (e) => {
     if (e.target.files.length > 0) {
-      if (e.target.files[0].name.includes('.stl')) {
+      if (e.target.files[0].name.toLowerCase().includes('.stl')) {
         setSelectedFile(e.target.files[0].name);
         setDownloadingFile(e.target.files[0].name);
       }
@@ -63,7 +67,7 @@ export default function App () {
 
   const downloadClicked = (e) => {
     axios({
-      url: 'http://localhost:3001/download/' + selectedFile, 
+      url: `${BASE_SERVER_URL}/download/${selectedFile}`, 
       method: 'GET',
       responseType: 'blob', 
     }).then((response) => {
