@@ -34,7 +34,6 @@ router.get('/download/:name', async (ctx) => {
   const filePath = `${dataPath}/${name}`;
   ctx.attachment(filePath);
   ctx.response.status = 200;
-  console.log(process.env.HOME);
   await send(ctx, name, { root: dataPath });
 });
 
