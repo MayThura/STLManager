@@ -2,12 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { useLoader, useThree } from "@react-three/fiber";
 
-const THREE = require('three');
-
 export const Model = ({ url }) => {
-  
   const geom = useLoader(STLLoader, url);
-
   const ref = useRef();
   const { camera } = useThree();
   useEffect(() => {
