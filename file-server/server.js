@@ -9,35 +9,36 @@ const app = new koa();
 
 const router = new Router();
 
-const dataPath = '/stl-viewer/public';
+const dataPathArr = __dirname.split('/');
+
+const dataPath = `${dataPathArr.slice(0, dataPathArr.length - 1).join('/')}/stl-viewer/public`;
 
 app.use(cors());
 
 app.use(koaBody({
   multipart: true,
   formidable: {
-    uploadDir: `${process.env.HOME}${dataPath}`,
+    uploadDir: dataPath,
     keepExtensions: true,
   },
   urlencoded: true,
 }));
 
-
-router.post('/upload', async (ctx) => { 
-    ctx.body = ctx.request.files.myFile.path;
-    return ctx;
+router.post('/upload', async (ctx) => {
+  ctx.body = ctx.request.files.myFile.path;
+  return ctx;
 });
 
 router.get('/download/:name', async (ctx) => {
-    const name = ctx.params.name;
-    const filePath = dataPath + '/' + name;
-    ctx.attachment(filePath);
-    ctx.response.status = 200;
-    await send(ctx, filePath, { root: process.env.HOME });
+  const name = ctx.params.name;
+  const filePath = `${dataPath}/${name}`;
+  ctx.attachment(filePath);
+  ctx.response.status = 200;
+  await send(ctx, name, { root: dataPath });
 });
 
 app.use(router.routes());
 
 app.listen(3001, () => {
-  console.log('koa is listening in 3001');
+  console.log('KOA server is listening in 3001');
 })
