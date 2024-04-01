@@ -1,11 +1,20 @@
-# STLManager
+# 3D Picture Uploader and Viewer
 
-This project consists of two main parts: `file-server` for back-end and `stl-viewer` for front-end.
+This innovative application allows users to upload, view, and download 3D STL files directly from a web page. Aimed at providing a seamless experience for 3D content creators and enthusiasts, this platform makes it easy to share and explore 3D models.
 
-`file-server` is the server to control the uploading and downloading of the STL files. It is implemented in nodejs and Koa. `stl-viewer` is the client side project, which is implement in react, three and fiber to display the STL files.
+## Project Structure
 
+The project is divided into two main components:
 
-When the user chooses a STL file, it will upload the file to the server. In this project, it assumes that the server database is in the local computer, so the uploaded file location is `stl-viewer/public`. Consequently, if the user wants to download the file, the STL files only from `stl-viewer/public` can be chosen to download. (In the real world project, this needs to be taken care by the service like AWS.) Whenever the user chooses the file to download or upload, it will be displayed on the web page so that the user can check the file out. 
+### `file-server` (Back-end)
+
+- Technology: Built with Node.js and Koa, file-server handles the uploading and downloading of STL files.
+- Functionality: It serves as the backend server, managing file transactions and ensuring smooth data flow between the client and server.
+
+### `stl-viewer` (Front-end)
+
+- Technology: Developed with React and powered by Three.js and Fiber, `stl-viewer` provides a dynamic interface for displaying STL files.
+- Features: Users can interact with the web page to upload STL files, which are then rendered for online viewing. The application supports downloading STL files, allowing users to save content locally.
 
 ## Installation
 Install `yarn` if you don't have it already
